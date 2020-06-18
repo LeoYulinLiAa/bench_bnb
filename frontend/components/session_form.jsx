@@ -12,14 +12,21 @@ const SessionForm = props => {
 
   const dispatch = useDispatch();
 
+  function resetForm() {
+    setUsername("");
+    setPassword("");
+  }
+
   function submitHandler(event) {
     event.preventDefault();
     switch (props.formType) {
       case "login":
         dispatch(login({ username, password }))
+          .then(resetForm, err => console.log(err))
         break;
       case "signup":
         dispatch(signup({ username, password }))
+          .then(resetForm, err => console.log(err))
         break;
     }
   }
@@ -33,7 +40,7 @@ const SessionForm = props => {
       </div>
       <div className="form-group">
         <label htmlFor="password">Password</label>
-        <input type="text" id="password" value={ password } onChange={ event => setPassword(event.target.value) }/>
+        <input type="password" id="password" value={ password } onChange={ event => setPassword(event.target.value) }/>
       </div>
       <button>{ props.formType }</button>
     </form>
