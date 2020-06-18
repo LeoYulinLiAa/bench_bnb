@@ -18,21 +18,14 @@ const SessionForm = props => {
   const hasError = useSelector(hasErrorSelector);
   const errors = useSelector(errorsSelector);
 
-  function resetForm() {
-    setUsername("");
-    setPassword("");
-  }
-
   function submitHandler(event) {
     event.preventDefault();
     switch (props.formType) {
       case "login":
-        dispatch(login({ username, password }))
-          .then(resetForm, err => console.log(err))
+        dispatch(login({ username, password }));
         break;
       case "signup":
-        dispatch(signup({ username, password }))
-          .then(resetForm, err => console.log(err))
+        dispatch(signup({ username, password }));
         break;
     }
   }
