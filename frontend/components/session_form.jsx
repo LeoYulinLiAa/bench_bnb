@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { login } from "../actions/session_actions";
+import { login, signup } from "../actions/session_actions";
 import { useDispatch } from "react-redux";
 
 /**
