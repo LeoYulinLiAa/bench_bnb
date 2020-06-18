@@ -12,9 +12,11 @@ const SessionForm = props => {
 
   const dispatch = useDispatch();
 
-  const hasError = state => state.errors.session.length > 0
+  const hasErrorSelector = state => state.errors.session.length > 0;
+  const errorsSelector = state => state.errors.session;
 
-  const errors = state => state.errors.session
+  const hasError = useSelector(hasErrorSelector);
+  const errors = useSelector(errorsSelector);
 
   function resetForm() {
     setUsername("");
@@ -37,11 +39,11 @@ const SessionForm = props => {
 
   return <div className="session-form">
     <h2>{ props.formType }</h2>
-    <div className="alert danger">
+    { hasError && <div className="alert danger">
       <ul>
-        { useSelector(errors).map(e => <li>{ e }</li>) }
+        { errors.map(e => <li>{ e }</li>) }
       </ul>
-    </div>
+    </div> }
     <form onSubmit={ submitHandler }>
       <div className="form-group">
         <label htmlFor="username">Username</label>
