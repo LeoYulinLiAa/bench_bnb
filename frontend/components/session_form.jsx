@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { login, signup } from "../actions/session_actions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 /**
  * @param {{formType: "login" | "signup"}} props
@@ -11,6 +11,10 @@ const SessionForm = props => {
   const [password, setPassword] = useState("");
 
   const dispatch = useDispatch();
+
+  const hasError = state => state.errors.session.length > 0
+
+  const errors = state => state.errors.session
 
   function resetForm() {
     setUsername("");
@@ -33,6 +37,11 @@ const SessionForm = props => {
 
   return <div className="session-form">
     <h2>{ props.formType }</h2>
+    <div className="alert danger">
+      <ul>
+        { useSelector(errors).map(e => <li>{ e }</li>) }
+      </ul>
+    </div>
     <form onSubmit={ submitHandler }>
       <div className="form-group">
         <label htmlFor="username">Username</label>

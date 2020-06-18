@@ -20,15 +20,15 @@ export const logoutCurrentUser = () => {
 export const receiveErrors = errors => {
   return {
     type: RECEIVE_ERRORS,
-    errors
+    errors: errors.responseJSON
   }
 }
 
 export const login = user => dispatch => postSession(user)
-  .then(user => dispatch(receiveCurrentUser(user)));
+  .then(user => dispatch(receiveCurrentUser(user)), err => dispatch(receiveErrors(err)));
 
 export const signup = user => dispatch => postUser(user)
-  .then(user => dispatch(receiveCurrentUser(user)));
+  .then(user => dispatch(receiveCurrentUser(user)), err => dispatch(receiveErrors(err)));
 
 export const logout = () => dispatch => deleteSession()
   .then(() => dispatch(logoutCurrentUser()));
