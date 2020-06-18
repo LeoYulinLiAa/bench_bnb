@@ -15,4 +15,6 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapStateToProps)(Greeting);
+const GreetingContainer = connect(mapStateToProps, mapDispatchToProps)(Greeting)
+
+export default GreetingContainer;
