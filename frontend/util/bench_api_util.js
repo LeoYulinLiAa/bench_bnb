@@ -2,7 +2,16 @@ export const getBenches = () => {
   return $.ajax({
     url: '/api/benches',
     error: err => console.log(err)
-  })
+  });
+};
+
+export const getBenchesInBound = (bound) => {
+  const { lat: south, lng: west } = bound.getSouthWest();
+  const { lat: north, lng: east } = bound.getNorthEast();
+  return $.ajax({
+    url: `/api/benches`,
+    data: { south, west, north, east }
+  });
 }
 
 /**
@@ -13,5 +22,5 @@ export const postBenches = bench => {
     url: '/api/benches',
     data: { bench },
     error: err => console.log(err)
-  })
-}
+  });
+};

@@ -1,6 +1,14 @@
 class Api::BenchesController < ApplicationController
   def index
-    @benches = Bench.all
+    n = params["north"]
+    s = params["south"]
+    w = params["west"]
+    e = params["east"]
+    @benches = if n && s && w && e
+                 Bench.where(lat: s..n, lon: w..e)
+               else
+                 Bench.all
+               end
   end
 
   def create
