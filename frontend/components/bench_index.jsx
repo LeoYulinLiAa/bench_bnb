@@ -13,9 +13,9 @@ const BenchIndex = () => {
     dispatch(fetchBenches());
   }, []);
 
-  return <ol>
+  return <ol className="bench-list">
     { benches.map(bench => {
-      return <li>
+      return <li key={`bench-${bench.id}`} id={`bench-${bench.id}`}>
         <div className="bench-list-item">
           <h3>{bench.description}</h3>
           {bench.lat}, {bench.lon}

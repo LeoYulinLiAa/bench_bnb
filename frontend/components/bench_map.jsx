@@ -49,7 +49,10 @@ const BenchMap = () => {
       });
       newMarkers.push(mark);
       google.maps.event.addListener(mark, 'mouseover', () => {
-        console.log(bench.id);
+        $(`#bench-${bench.id}`).addClass("highlight");
+      });
+      google.maps.event.addListener(mark, 'mouseout', () => {
+        $(`#bench-${bench.id}`).removeClass("highlight");
       });
     });
     setMarkers(newMarkers);
