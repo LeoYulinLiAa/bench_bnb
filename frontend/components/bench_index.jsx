@@ -1,12 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect } from "react";
 import { fetchBenches } from "../actions/bench_actions";
+import { benchesSelector } from "../store/selectors";
 
 const BenchIndex = () => {
 
-  const benchesSelector = state => {
-    return Object.values(state.entities.benches);
-  }
   const benches = /** @type {{id: number, description: string, lat: number, lon: number}[]} */ useSelector(benchesSelector);
 
   const dispatch = useDispatch();

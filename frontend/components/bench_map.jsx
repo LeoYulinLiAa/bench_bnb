@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchBenchesInBound } from "../actions/bench_actions";
 import debounce from 'lodash.debounce';
+import { benchesSelector } from "../store/selectors";
 
 const BenchMap = () => {
 
@@ -10,6 +11,8 @@ const BenchMap = () => {
   const [bound, setBound] = useState(null);
 
   const dispatch = useDispatch();
+
+  const benches = useSelector(benchesSelector);
 
   useEffect(() => {
     if (bound) dispatch(fetchBenchesInBound(bound));
@@ -20,7 +23,7 @@ const BenchMap = () => {
       center: { lat: 37.7758, lng: -122.435 }, // this is SF
       zoom: 13
     };
-    const map = new google.maps.Map(document.getElementById("map-container"), mapOptions);
+    map = new google.maps.Map(document.getElementById("map-container"), mapOptions);
 
     const updateBound = debounce(() => {
       setBound(map.getBounds());
