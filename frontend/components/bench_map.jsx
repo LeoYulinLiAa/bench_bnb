@@ -40,12 +40,12 @@ const BenchMap = () => {
   useEffect(() => {
     markers.forEach(marker => marker.setMap(null));
     const newMarkers = [];
-    benches.forEach(bench => {
+    benches.forEach((bench, idx) => {
       const {lat, lon: lng} = bench
       const mark = new google.maps.Marker({
         map: googleMap,
         position: { lat, lng },
-        label: `${bench.id}`
+        label: `${idx + 1}`
       });
       newMarkers.push(mark);
       google.maps.event.addListener(mark, 'mouseover', () => {
@@ -53,7 +53,7 @@ const BenchMap = () => {
       });
     });
     setMarkers(newMarkers);
-  }, [benches])
+  }, [JSON.stringify(benches)])
 
   return <div>
     <div id='map-container'>

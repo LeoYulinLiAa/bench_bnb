@@ -13,11 +13,16 @@ const BenchIndex = () => {
     dispatch(fetchBenches());
   }, []);
 
-  return <ul>
+  return <ol>
     { benches.map(bench => {
-      return <li>{bench.description} - {bench.lat}, {bench.lon}</li>
+      return <li>
+        <div className="bench-list-item">
+          <h3>{bench.description}</h3>
+          {bench.lat}, {bench.lon}
+        </div>
+      </li>
     }) }
-  </ul>
+  </ol>
 
 };
 
