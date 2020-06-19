@@ -6,9 +6,10 @@ import { benchesSelector } from "../store/selectors";
 
 const BenchMap = () => {
 
-  let map = null;
 
   const [bound, setBound] = useState(null);
+  const [googleMap, setGoogleMap] = useState(null);
+  const [markers, setMarkers] = useState([]);
 
   const dispatch = useDispatch();
 
@@ -19,29 +20,40 @@ const BenchMap = () => {
   }, [bound]);
 
   useEffect(() => {
+
     const mapOptions = {
       center: { lat: 37.7758, lng: -122.435 }, // this is SF
       zoom: 13
     };
-    map = new google.maps.Map(document.getElementById("map-container"), mapOptions);
+
+    const map = new google.maps.Map(document.getElementById("map-container"), mapOptions);
+    setGoogleMap(map);
 
     const updateBound = debounce(() => {
       setBound(map.getBounds());
-    }, 200);
+    }, 500);
 
     google.maps.event.addListener(map, 'bounds_changed', updateBound);
 
-    const mark = new google.maps.Marker({
-      map,
-      position: { lat: 37.7758, lng: -122.435 },
-      label: "SF?"
-    });
-
-    google.maps.event.addListener(mark, 'mouseover', () => {
-      console.log("no!");
-    });
-
   }, []);
+
+  useEffect(() => {
+    markers.forEach(marker => marker.setMap(null));
+    const newMarkers = [];
+    benches.forEach(bench => {
+      const {lat, lon: lng} = bench
+      const mark = new google.maps.Marker({
+        map: googleMap,
+        position: { lat, lng },
+        label: `${bench.id}`
+      });
+      newMarkers.push(mark);
+      google.maps.event.addListener(mark, 'mouseover', () => {
+        console.log(bench.id);
+      });
+    });
+    setMarkers(newMarkers);
+  }, [benches])
 
   return <div>
     <div id='map-container'>
