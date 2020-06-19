@@ -11,6 +11,16 @@ class Api::BenchesController < ApplicationController
                end
   end
 
+  def show
+    bench = Bench.find_by_id(params[:id])
+    if bench
+      @benches = [bench]
+      render :index
+    else
+      render json: ["Bench not found"], status: 404
+    end
+  end
+
   def create
     @bench = Bench.new(bench_params)
     if @bench.save
